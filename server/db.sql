@@ -21,6 +21,6 @@ CREATE TABLE restaurants(
   restaurant_id SERIAL PRIMARY KEY,
   restaurant_name VARCHAR(128) NOT NULL,
   restaurant_category category NOT NULL,
-  rating SMALLINT CHECK (rating BETWEEN 0 AND 5) NOT NULL,
+  rating SMALLINT CHECK (rating BETWEEN 0 AND 5) DEFAULT 0 NOT NULL,
   last_visit DATE
 );
