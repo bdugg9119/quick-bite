@@ -10,7 +10,7 @@ CREATE TYPE category AS ENUM (
   'Hungarian',
   'Italian',
   'Japanese',
-  'Mediterranean'
+  'Mediterranean',
   'Mexican',
   'Pizza',
   'Pub Grub',
