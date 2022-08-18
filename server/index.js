@@ -12,25 +12,77 @@ app.use(express.json());
 // Create
 app.post('/restaurants', async (req, res) => {
   try {
-    const { restaurant_category, restaurant_name } = req.body;
+    const { category, name, rating } = req.body;
 
     const newRestaurant = await pool.query(
-      'INSERT INTO restaurants(restaurant_name, restaurant_category) VALUES($1, $2) RETURNING *', 
-      [restaurant_name, restaurant_category]
+      'INSERT INTO restaurants(name, category, rating) VALUES($1, $2, $3) RETURNING *', 
+      [name, category, rating]
     );
 
     res.json(newRestaurant.rows[0]);
-  
-  } catch (error) { console.log(error); }
+  } catch (err) {
+    console.error(err.message);
+  }
 });
 
 // Get All
+app.get('/restaurants', async (_, res) => {
+  try {
+    const restaurants = await pool.query('SELECT * FROM restaurants');
+
+    res.json(restaurants.rows);
+  } catch (err) {
+    console.error(error.message);
+  }
+})
 
 // Get Single
+app.get('/restaurants/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const restaurant = await pool.query(
+      'SELECT * FROM restaurants WHERE restaurant_id = $1',
+      [id]
+    );
+
+    res.json(restaurant.rows[0]);
+  } catch (err) {
+    console.error(err.message);
+  }
+})
 
 // Update
+app.put('/restaurants/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { name, category, rating, last_visit } = req.body;
+
+    await pool.query(
+      `UPDATE restaurants
+        SET name = $1,
+            category = $2,
+            rating = $3,
+            last_visit = $4
+        WHERE restaurant_id = $5`
+      , [name, category, rating, last_visit, id]);
+    
+    res.json('Restaurant Updated');
+  } catch (err) {
+    console.error(err.message);
+  }
+})
 
 // Delete
+app.delete('/restaurants/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    await pool.query('DELETE FROM restaurants WHERE restaurant_id = $1', [id]);
+    res.json('Restaurant deleted.');
+  } catch (err) {
+    console.error(err.message);
+  }
+})
 
 const port = 5000;
 app.listen(port, () => console.log(`Server has started on port ${port}`));

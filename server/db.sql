@@ -1,13 +1,14 @@
 CREATE DATABASE restaurant_list;
 
-CREATE TYPE category AS ENUM (
+CREATE TYPE CATEGORY AS ENUM (
   'Chinese',
-  'Diner',
+  'Deli & Diner',
   'Eastern Other',
   'Fast Food',
   'French',
   'Greek',
   'Hungarian',
+  'Indian',
   'Italian',
   'Japanese',
   'Mediterranean',
@@ -19,8 +20,8 @@ CREATE TYPE category AS ENUM (
 
 CREATE TABLE restaurants(
   restaurant_id SERIAL PRIMARY KEY,
-  restaurant_name VARCHAR(128) NOT NULL,
-  restaurant_category category NOT NULL,
-  rating SMALLINT CHECK (rating BETWEEN 0 AND 5) DEFAULT 0 NOT NULL,
+  name VARCHAR(128) NOT NULL,
+  category CATEGORY NOT NULL,
+  rating SMALLINT CHECK (rating BETWEEN 1 AND 5),
   last_visit DATE
 );
