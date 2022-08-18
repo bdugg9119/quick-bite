@@ -12,11 +12,11 @@ app.use(express.json());
 // Create
 app.post('/restaurants', async (req, res) => {
   try {
-    const { category, name, rating } = req.body;
+    const { category, name, rating, last_visit } = req.body;
 
     const newRestaurant = await pool.query(
-      'INSERT INTO restaurants(name, category, rating) VALUES($1, $2, $3) RETURNING *', 
-      [name, category, rating]
+      'INSERT INTO restaurants(name, category, rating, last_visit) VALUES($1, $2, $3, $4) RETURNING *', 
+      [name, category, rating, last_visit]
     );
 
     res.json(newRestaurant.rows[0]);
