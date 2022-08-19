@@ -20,7 +20,7 @@ export enum RestaurantCategory {
 
 export type Restaurant = {
   category: RestaurantCategory,
-  id: number,
+  restaurant_id: number,
   last_visit?: Date,
   name: string,
   rating?: Rating

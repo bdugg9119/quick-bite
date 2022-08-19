@@ -1,24 +1,25 @@
 import {
-  Button,
+  CircularProgress,
+  IconButton,
   Paper,
+  Rating,
   Table,
   TableBody,
   TableCell,
   TableContainer,
   TableHead,
   TableRow
-} from "@mui/material";
+} from '@mui/material';
+import DeleteIcon from '@mui/icons-material/Delete';
 
-import { Restaurant, RestaurantCategory } from "../static/types";
+import { useQuery } from '@tanstack/react-query';
+
+import { getAllRestaurants } from '../api';
 
 const RestaurantList = () => {
-  const restaurants: Restaurant[] = [{
-    category: RestaurantCategory.Italian,
-    id: 1,
-    last_visit: new Date(),
-    name: "Gino's Italian Eatery",
-    rating: 2
-  }];
+  const { data: restaurants, isLoading } = useQuery(['restaurants'], getAllRestaurants);
+
+  if (isLoading) return <CircularProgress />;
 
   return (
     <TableContainer component={Paper}>
@@ -34,18 +35,17 @@ const RestaurantList = () => {
         </TableHead>
         <TableBody>
           {restaurants?.map(restaurant => (
-            <TableRow key={restaurant.id}>
+            <TableRow key={restaurant.restaurant_id}>
               <TableCell>{restaurant.name}</TableCell>
               <TableCell align='right'>{restaurant.category}</TableCell>
-              <TableCell align='right'>{restaurant.rating}</TableCell>
-              <TableCell align='right'>{restaurant.last_visit?.toString()}</TableCell>
               <TableCell align='right'>
-                <Button
-                  color='error'
-                  variant='contained'
-                >
-
-                </Button>
+                <Rating readOnly value={restaurant.rating}/>
+              </TableCell>
+              <TableCell align='right'>{restaurant.last_visit?.toLocaleDateString('en-US') || 'Never Been'}</TableCell>
+              <TableCell align='right'>
+                <IconButton aria-label='delete' color='error'>
+                  <DeleteIcon />
+                </IconButton>
               </TableCell>
             </TableRow>
           ))}
