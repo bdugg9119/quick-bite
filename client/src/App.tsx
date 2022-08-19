@@ -1,4 +1,4 @@
-import {Container, CssBaseline} from '@mui/material';
+import {Box, Button, Container, CssBaseline} from '@mui/material';
 import {RestaurantList} from './components';
 
 function App() {
@@ -7,11 +7,16 @@ function App() {
     <div className="App">
       <CssBaseline />
       <Container maxWidth='lg'>
-        Hello
-        <RestaurantList />
+        <Box sx={{ display: 'flex', flexDirection: 'column', margin: '10% 2%' }}>
+          <Box sx={{ display: 'flex', justifyContent: 'space-between', margin: '3% 0' }}>
+            <Button variant='contained'>Roll A Restaurant</Button>
+            <Button variant='contained'>Add New Restaurant</Button>
+          </Box>
+          <RestaurantList />
+        </Box>
       </Container>
     </div>
-  )
-}
+  );
+};
 
-export default App
+export default App;

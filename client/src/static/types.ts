@@ -1,3 +1,5 @@
+export type Rating = 1|2|3|4|5;
+
 export enum RestaurantCategory {
   Chinese = 'Chinese',
   DeliDiner = 'Deli & Diner',
@@ -16,12 +18,10 @@ export enum RestaurantCategory {
   Thai = 'Thai'
 };
 
-export type Rating = 1|2|3|4|5;
-
 export type Restaurant = {
-  id: number,
-  name: string,
   category: RestaurantCategory,
-  rating?: Rating,
-  last_visit?: Date
+  id: number,
+  last_visit?: Date,
+  name: string,
+  rating?: Rating
 };
