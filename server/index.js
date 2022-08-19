@@ -32,7 +32,7 @@ app.get('/restaurants', async (_, res) => {
 
     res.json(restaurants.rows);
   } catch (err) {
-    console.error(error.message);
+    console.error(err.message);
   }
 })
 
@@ -64,8 +64,8 @@ app.put('/restaurants/:id', async (req, res) => {
             category = $2,
             rating = $3,
             last_visit = $4
-        WHERE restaurant_id = $5`
-      , [name, category, rating, last_visit, id]);
+        WHERE restaurant_id = $5`,
+      [name, category, rating, last_visit, id]);
     
     res.json('Restaurant Updated');
   } catch (err) {
