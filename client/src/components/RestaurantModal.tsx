@@ -12,12 +12,12 @@ const RestaurantModal = ({open, restaurant}: RestaurantModalProps) => {
   return (
     <Dialog open={open}>
       <DialogTitle>
-        <TextField required>{name}</TextField>
+        <TextField defaultValue={name} required />
       </DialogTitle>
       <DialogContent>
-        <TextField>{rating}</TextField>
-        <TextField required>{category}</TextField>
-        <TextField>{last_visit?.toLocaleDateString('en-US')}</TextField>
+        <TextField defaultValue={rating} />
+        <TextField defaultValue={category} required />
+        <TextField defaultValue={last_visit?.toLocaleDateString('en-US')} />
       </DialogContent>
     </Dialog>
   );

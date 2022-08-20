@@ -21,8 +21,8 @@ import { Restaurant } from '../static/types';
 
 const RestaurantList = () => {
   const { data: restaurants, isLoading } = useQuery(['restaurants'], getAllRestaurants);
-  const [dialogOpen, setDialogOpen] = useState<boolean>(false);
-  const [selectedRestaurant, setSelectedRestaurant] = useState<Restaurant>(nullRestaurant);
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const [selectedRestaurant, setSelectedRestaurant] = useState(nullRestaurant);
 
   const handleRowClick = (restaurant: Restaurant) => {
     setSelectedRestaurant(restaurant);
