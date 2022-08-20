@@ -1,16 +1,21 @@
 import { Dialog, DialogContent, DialogTitle, TextField } from "@mui/material";
 import { Restaurant } from "../static/types";
 
-type RestaurantModalProps = {
+type RestaurantDialogProps = {
+  handleCloseEditDialog: () => void,
   open: boolean,
   restaurant: Restaurant
 };
 
-const RestaurantModal = ({open, restaurant}: RestaurantModalProps) => {
+const RestaurantDialog = ({
+  handleCloseEditDialog,
+  open,
+  restaurant
+}: RestaurantDialogProps) => {
   const { category, last_visit, name, rating } = restaurant;
 
   return (
-    <Dialog open={open}>
+    <Dialog onClose={handleCloseEditDialog} open={open}>
       <DialogTitle>
         <TextField defaultValue={name} required />
       </DialogTitle>
@@ -23,4 +28,4 @@ const RestaurantModal = ({open, restaurant}: RestaurantModalProps) => {
   );
 };
 
-export default RestaurantModal;
+export default RestaurantDialog;

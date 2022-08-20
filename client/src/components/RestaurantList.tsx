@@ -1,6 +1,6 @@
 import {
+  Button,
   CircularProgress,
-  IconButton,
   Paper,
   Rating,
   Table,
@@ -10,30 +10,51 @@ import {
   TableHead,
   TableRow
 } from '@mui/material';
-import DeleteIcon from '@mui/icons-material/Delete';
 import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 
+import RestaurantDialog from './RestaurantDialog';
 import { getAllRestaurants } from '../api';
-import RestaurantModal from './RestaurantModal';
 import { nullRestaurant } from '../static/utils';
 import { Restaurant } from '../static/types';
+import { DeleteDialog } from '.';
 
 const RestaurantList = () => {
   const { data: restaurants, isLoading } = useQuery(['restaurants'], getAllRestaurants);
+  const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [dialogOpen, setDialogOpen] = useState(false);
   const [selectedRestaurant, setSelectedRestaurant] = useState(nullRestaurant);
 
-  const handleRowClick = (restaurant: Restaurant) => {
+  const handleDeleteClick = (restaurant: Restaurant) => {
+    setSelectedRestaurant(restaurant);
+    setDeleteDialogOpen(true);
+  }
+
+  const handleCloseDeleteDialog = () => {
+    setDeleteDialogOpen(false);
+    setSelectedRestaurant(nullRestaurant);
+  }
+
+  const handleEditClick = (restaurant: Restaurant) => {
     setSelectedRestaurant(restaurant);
     setDialogOpen(true);
-  }
+  };
+
+  const handleCloseEditDialog = () => {
+    setDialogOpen(false);
+    setSelectedRestaurant(nullRestaurant);
+  };
 
   if (isLoading) return <CircularProgress />;
 
   return (
     <>
-      <RestaurantModal open={dialogOpen} restaurant={selectedRestaurant} />
+      <DeleteDialog handleClose={handleCloseDeleteDialog} open={deleteDialogOpen} name={selectedRestaurant.name}/>
+      <RestaurantDialog
+        handleCloseEditDialog={handleCloseEditDialog}
+        open={dialogOpen}
+        restaurant={selectedRestaurant}
+      />
       <TableContainer component={Paper}>
         <Table aria-label='Table containing a list of restaurants'>
           <TableHead>
@@ -42,25 +63,23 @@ const RestaurantList = () => {
               <TableCell align='right'>Category</TableCell>
               <TableCell align='right'>Rating</TableCell>
               <TableCell align='right'>Last Visit</TableCell>
-              <TableCell align='right'>Delete</TableCell>
+              <TableCell align='right'>Options</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {restaurants?.map(restaurant => (
-              <TableRow
-                key={restaurant.restaurant_id}
-                onClick={() => handleRowClick(restaurant)}
-              >
+              <TableRow key={restaurant.restaurant_id}>
                 <TableCell>{restaurant.name}</TableCell>
                 <TableCell align='right'>{restaurant.category}</TableCell>
                 <TableCell align='right'>
                   <Rating readOnly value={restaurant.rating}/>
                 </TableCell>
-                <TableCell align='right'>{restaurant.last_visit?.toLocaleDateString('en-US') || 'Never Been'}</TableCell>
                 <TableCell align='right'>
-                  <IconButton aria-label='delete' color='error'>
-                    <DeleteIcon />
-                  </IconButton>
+                  {restaurant.last_visit?.toLocaleDateString('en-US') || 'Never Been'}
+                </TableCell>
+                <TableCell align='right'>
+                  <Button onClick={() => handleEditClick(restaurant)}>Edit</Button>
+                  <Button color='error' onClick={() => handleDeleteClick(restaurant)}>Delete</Button>
                 </TableCell>
               </TableRow>
             ))}
