@@ -1,17 +1,22 @@
-import { Dialog, DialogContent, DialogTitle, TextField } from "@mui/material";
-import { Restaurant } from "../static/types";
+import {
+  Dialog,
+  DialogContent,
+  DialogTitle,
+  TextField
+} from '@mui/material';
+import { Restaurant } from '../static/types';
 
-type RestaurantDialogProps = {
+type EditDialogProps = {
   handleClose: () => void,
   open: boolean,
   restaurant: Restaurant
 };
 
-const RestaurantDialog = ({
+const EditDialog = ({
   handleClose,
   open,
   restaurant
-}: RestaurantDialogProps) => {
+}: EditDialogProps) => {
   const { category, last_visit, name, rating } = restaurant;
 
   return (
@@ -28,4 +33,4 @@ const RestaurantDialog = ({
   );
 };
 
-export default RestaurantDialog;
+export default EditDialog;

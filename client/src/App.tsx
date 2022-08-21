@@ -1,8 +1,12 @@
-import {Box, Button, Container, CssBaseline} from '@mui/material';
+import {
+  Box,
+  Container,
+  CssBaseline
+} from '@mui/material';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 
-import {RestaurantList} from './components';
+import {RestaurantList, TopButtons} from './components';
 
 const queryClient = new QueryClient();
 
@@ -14,10 +18,7 @@ function App() {
       <QueryClientProvider client={queryClient}>
         <Container maxWidth='lg'>
           <Box sx={{ display: 'flex', flexDirection: 'column', margin: '10% 2%' }}>
-            <Box sx={{ display: 'flex', justifyContent: 'space-between', margin: '3% 0' }}>
-              <Button variant='contained'>Pick A Restaurant</Button>
-              <Button variant='contained'>Add New Restaurant</Button>
-            </Box>
+            <TopButtons />
             <RestaurantList />
           </Box>
         </Container>

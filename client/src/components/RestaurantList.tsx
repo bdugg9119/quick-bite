@@ -13,7 +13,7 @@ import {
 import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 
-import RestaurantDialog from './RestaurantDialog';
+import EditDialog from './EditDialog';
 import { getAllRestaurants } from '../api';
 import { nullRestaurant } from '../static/utils';
 import { Restaurant } from '../static/types';
@@ -51,7 +51,7 @@ const RestaurantList = () => {
         name={selectedRestaurant.name}
         open={deleteDialogOpen}
       />
-      <RestaurantDialog
+      <EditDialog
         handleClose={handleCloseEditDialog}
         open={dialogOpen}
         restaurant={selectedRestaurant}
