@@ -25,33 +25,34 @@ const RestaurantList = () => {
   const [dialogOpen, setDialogOpen] = useState(false);
   const [selectedRestaurant, setSelectedRestaurant] = useState(nullRestaurant);
 
+
   const handleDeleteClick = (restaurant: Restaurant) => {
     setSelectedRestaurant(restaurant);
     setDeleteDialogOpen(true);
   }
 
-  const handleCloseDeleteDialog = () => {
-    setDeleteDialogOpen(false);
-    setSelectedRestaurant(nullRestaurant);
-  }
+  const handleCloseDeleteDialog = () => setDeleteDialogOpen(false);
 
   const handleEditClick = (restaurant: Restaurant) => {
     setSelectedRestaurant(restaurant);
     setDialogOpen(true);
   };
 
-  const handleCloseEditDialog = () => {
-    setDialogOpen(false);
-    setSelectedRestaurant(nullRestaurant);
-  };
+  const handleCloseEditDialog = () => setDialogOpen(false);
+
 
   if (isLoading) return <CircularProgress />;
 
   return (
     <>
-      <DeleteDialog handleClose={handleCloseDeleteDialog} open={deleteDialogOpen} name={selectedRestaurant.name}/>
+      <DeleteDialog
+        handleClose={handleCloseDeleteDialog}
+        id={selectedRestaurant.restaurant_id}
+        name={selectedRestaurant.name}
+        open={deleteDialogOpen}
+      />
       <RestaurantDialog
-        handleCloseEditDialog={handleCloseEditDialog}
+        handleClose={handleCloseEditDialog}
         open={dialogOpen}
         restaurant={selectedRestaurant}
       />

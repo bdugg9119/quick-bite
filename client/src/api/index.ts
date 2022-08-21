@@ -8,3 +8,12 @@ export const getAllRestaurants = async (): Promise<Restaurant[]> => {
     return err;
   }
 };
+
+export const deleteRestaurant = async (id: number) => {
+  try {
+    return await fetch(`http://localhost:5000/restaurants/${id}`, { method: 'DELETE' });
+  } catch (err: any) {
+    console.log(err.message);
+    return err;
+  }
+};
