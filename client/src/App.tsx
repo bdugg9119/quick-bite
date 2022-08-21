@@ -5,7 +5,6 @@ import {
 } from '@mui/material';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
-
 import {RestaurantList, TopButtons} from './components';
 
 const queryClient = new QueryClient();
